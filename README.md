@@ -21,6 +21,7 @@ Test error is quite big because it represents L1 loss with respect to euler's an
 • Apply augmentation <s> <b> only if </b> model works bad during inference time </s> 
 
 Just took a look at learning curves, model is too weak, so
+I think we need stronger feature extraction
 
 • Implement hourglass 
 
