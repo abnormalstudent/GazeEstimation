@@ -15,3 +15,9 @@ it measures AE between euler's angles in camera coordinate system.
 • Implement pupil center detection using another dense layer
 
 • Apply augmentation <s> <b> only if </b> model works bad during inference time </s> 
+
+## Tried approaches
+| Model                                  | Test Error                    | Training Time                          |
+|:---------------------------------------|:-----------------------------:|:--------------------------------------:|
+| GazeNet (7 conv, 1 dense, w/ BN)       |           0.91                | 1h                                     |
+
