@@ -9,9 +9,9 @@ MAE of current architecture of regressor-neural-network is around 0.91, which ha
 it measures AE between euler's angles in camera coordinate system.
 
 ## Tried approaches
-| Model                                  | Test Error                    | Training Time                          | Model size     |
+| Model                                  | Test Error                    | Amount of epochs                       | Model size     |
 |:---------------------------------------|:-----------------------------:|:--------------------------------------:|:---------------|
-| GazeNet (7 conv, 1 dense, w/ BN)       |           0.91                | 1h                                     | 8.7 Mb
+| GazeNet (7 conv, 1 dense, w/ BN)       |           0.91                | 70                                     | 8.7 Mb         |
 
 
 ## ToDo
