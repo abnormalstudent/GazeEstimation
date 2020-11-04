@@ -7,3 +7,11 @@ training environment for [SynthesEyes](https://www.cl.cam.ac.uk/research/rainbow
 Also, evaluation was done on test set and it was shown, that 
 MAE of current architecture of regressor-neural-network is around 0.91, which happens to be a lot, because
 it measures AE between euler's angles in camera coordinate system.
+
+## ToDo
+
+• Use iris features given in the dataset 
+
+• Implement pupil center detection using another dense layer
+
+• Apply augmentation <s> <b> only if </b> model works bad during inference time </s> 
