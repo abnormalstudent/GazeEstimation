@@ -1,5 +1,6 @@
 # GazeEstimation
 This README contains my attempts to solve gaze estimation task.
+
 dlib + Pytorch pipeline for gaze estimation.
 
 `SynthesEyes.ipynb` contains step-by-step implementation of 
