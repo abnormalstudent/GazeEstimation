@@ -38,3 +38,5 @@ I think we need stronger feature extraction
 
 • <s> Implement hourglass </s> 
 
+• Explain hourglass error
+
