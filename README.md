@@ -21,6 +21,10 @@ Still high test error, learning curves speak for themselves
 
 ![](learning_curves/GazeNet_v2.jpg)
 
+## Hourglass depth-3, residual-1
+
+![](learning_curves/Hourglass_depth-3_residual-1.jpg)
+
 ## ToDo
 
 • Use iris features given in the dataset 
@@ -32,5 +36,5 @@ Still high test error, learning curves speak for themselves
 Just took a look at learning curves, model is too weak, so
 I think we need stronger feature extraction
 
-• Implement hourglass 
+• <s> Implement hourglass </s> 
 
