@@ -58,3 +58,4 @@ I think we need stronger feature extraction
 
 • Explain hourglass error
 
+• Implement softmax over heatmaps in order to predict landmarks coordinates
