@@ -30,7 +30,7 @@ UPD : Legend are not right, it must be "Train loss and test loss"
 |:---------------------------------------|:-----------------------------:|:---------------------------:|:---------------|:----------------|
 | PupilNet-3Hourglass w/ BN              |              ~3000            |     10240/153               |       2 Mb     | 146 ms on pretty old InterCore-i5 CPU   |
 
-## Hourglass depth-3, residual-1
+## PupilNet-3Hourglass w/ BN
 
 Test error is around 3000, which is actually 3000 / 32 ~ 93.75 per prediction, because I accidentally 
 measured it over batch, not over single image. It means that following model gives approximately less than 0.01 error per pixel 
