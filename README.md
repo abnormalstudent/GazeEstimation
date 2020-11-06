@@ -7,10 +7,10 @@ dlib + Pytorch pipeline for gaze estimation.
 training environment for [SynthesEyes](https://www.cl.cam.ac.uk/research/rainbow/projects/syntheseyes/) dataset.
 
 ## Gaze estimation
-| Model                                  | Test Error                    | Amount of epochs |   Model size   |
-|:---------------------------------------|:-----------------------------:|:----------------:|:---------------|
-| GazeNet (7 conv, 1 dense, w/o BN)      |           0.91                |       70         |    8.7 Mb      |
-| GazeNet_v2 (7 conv, 2 dense, w/ BN)    |           0.79                |       70         |   15.6 Mb      |
+| Model                                  | Test Error                    |   Train size/Amount of epochs |   Model size   |
+|:---------------------------------------|:-----------------------------:|:-----------------------------:|:---------------|
+| GazeNet (7 conv, 1 dense, w/o BN)      |           0.91                |       10240/70                |    8.7 Mb      |
+| GazeNet_v2 (7 conv, 2 dense, w/ BN)    |           0.79                |       10240/70                |   15.6 Mb      |
 
 ## GazeNet (7 conv, 1 dense, w/o BN) 
 Test error is quite big because it represents L1 loss with respect to euler's angles in screen space 
@@ -24,9 +24,9 @@ UPD : Legend are not right, it must be "Train loss and test loss"
 
 ## Pupil landmarks estimation
 
-| Model                                  | Test Error                    | Amount of epochs |   Model size   | Evaluation time |
-|:---------------------------------------|:-----------------------------:|:----------------:|:---------------|:----------------|
-| PupilNet-3Hourglass w/ BN              |              ~3000            |     153          |       2 Mb     | 146 ms on pretty old InterCore-i5 CPU   |
+| Model                                  | Test Error                    | Train size/Amount of epochs |   Model size   | Evaluation time |
+|:---------------------------------------|:-----------------------------:|:---------------------------:|:---------------|:----------------|
+| PupilNet-3Hourglass w/ BN              |              ~3000            |     10240/153               |       2 Mb     | 146 ms on pretty old InterCore-i5 CPU   |
 
 ## Hourglass depth-3, residual-1
 
