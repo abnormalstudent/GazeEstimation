@@ -23,9 +23,10 @@ UPD : Legend are not right, it must be "Train loss and test loss"
 ![](learning_curves/GazeNet_v2.jpg)
 
 ## Pupil landmarks estimation
-| Model                                  | Test Error                    | Amount of epochs |   Model size   |
-|:---------------------------------------|:-----------------------------:|:----------------:|:---------------|
-| PupilNet-3Hourglass w/ BN              |              ~3000            |     153          |       2 Mb     |
+
+| Model                                  | Test Error                    | Amount of epochs |   Model size   | Evaluation time |
+|:---------------------------------------|:-----------------------------:|:----------------:|:---------------|:----------------|
+| PupilNet-3Hourglass w/ BN              |              ~3000            |     153          |       2 Mb     | 146 ms on pretty old InterCore-i5 CPU   |
 
 ## Hourglass depth-3, residual-1
 
@@ -42,9 +43,9 @@ Actual heatmaps of pupil landmarks :
 
 ## ToDo
 
-• Use iris features given in the dataset 
+• <s> Use pupil features given in the dataset </s> 
 
-• Implement pupil center detection using another dense layer
+• Implement pupil center detection using another dense layer (probably it is just weighted softmax of all heatmaps?)
 
 • Apply augmentation <s> <b> only if </b> model works bad during inference time </s> 
 
