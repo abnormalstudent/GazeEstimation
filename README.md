@@ -6,6 +6,8 @@ dlib + Pytorch pipeline for gaze estimation.
 `SynthesEyes.ipynb` contains step-by-step implementation of 
 training environment for [SynthesEyes](https://www.cl.cam.ac.uk/research/rainbow/projects/syntheseyes/) dataset.
 
+`Hourglass.ipynb` contains my implementation of Hourglass neural network, it's training and evaluation for pupil heatmaps extraction.
+
 ## Gaze estimation
 | Model                                  | Test Error                    |   Train size/Amount of epochs |   Model size   |
 |:---------------------------------------|:-----------------------------:|:-----------------------------:|:---------------|
