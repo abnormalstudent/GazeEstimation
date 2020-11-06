@@ -18,6 +18,7 @@ Test error is quite big because it represents L1 loss with respect to euler's an
 
 ## GazeNet_v2 (8 conv, 2 dense, w/ BN)
 Still high test error, learning curves speak for themselves 
+UPD : Legend are not right, it must be "Train loss and test loss" 
 
 ![](learning_curves/GazeNet_v2.jpg)
 
