@@ -6,7 +6,7 @@ dlib + Pytorch pipeline for gaze estimation.
 `SynthesEyes.ipynb` contains step-by-step implementation of 
 training environment for [SynthesEyes](https://www.cl.cam.ac.uk/research/rainbow/projects/syntheseyes/) dataset.
 
-## Tried approaches
+## Gaze estimation
 | Model                                  | Test Error                    | Amount of epochs |   Model size   |
 |:---------------------------------------|:-----------------------------:|:----------------:|:---------------|
 | GazeNet (7 conv, 1 dense, w/o BN)      |           0.91                |       70         |    8.7 Mb      |
@@ -22,9 +22,23 @@ UPD : Legend are not right, it must be "Train loss and test loss"
 
 ![](learning_curves/GazeNet_v2.jpg)
 
+## Pupil landmarks estimation
+| Model                                  | Test Error                    | Amount of epochs |   Model size   |
+|:---------------------------------------|:-----------------------------:|:----------------:|:---------------|
+| PupilNet-3Hourglass w/ BN              |              ~3000            |     153          |       2 Mb     |
+
 ## Hourglass depth-3, residual-1
 
-![](learning_curves/Hourglass_depth-3_residual-1.jpg)
+Test error is around 3000, which is actually 3000 / 32 ~ 93.75 per prediction, because I accidentally 
+measured it over batch, not over single image. It means that following model gives approximately less than 0.01 error per pixel 
+(because one prediction contains 8 heatmaps each of them has 80x120 pixels), which 
+is enough to predict valuable heatmaps.
+
+![](learning_curves/PupilEyeNet_3Hourglass.jpg)
+
+Actual heatmaps of pupil landmarks : 
+
+![](networks_evaluations/pupil_heatmaps.png)
 
 ## ToDo
 
