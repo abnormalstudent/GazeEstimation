@@ -20,6 +20,7 @@ Test error is quite big because it represents L1 loss with respect to euler's an
 
 ### GazeNet_v2 (8 conv, 2 dense, w/ BN)
 Clear underfit, my guess is that it is pretty hard to learn direct mapping from feature space of the image (HxWx3) directly to gaze (just 2 features, it is either point on the screen or two angles in radians). Should try to learn intermediate features first.
+
 UPD : Legend are not right, it must be "Train loss and test loss" 
 
 ![](learning_curves/GazeNet_v2.jpg)
