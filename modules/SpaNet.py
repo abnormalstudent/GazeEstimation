@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 
-from src.Hourglass import Hourglass
-from src.DenseNet import DenseNet
+from modules.Hourglass import Hourglass
+from modules.DenseNet import DenseNet
 
 class SpaNet(nn.Module):
     def __init__(self, in_features=64, middle_features=32, residual_count=3, use_batchnorm=True):
