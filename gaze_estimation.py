@@ -21,7 +21,7 @@ def load_model(device):
     # model = SpaNet(in_features=64, middle_features=32, residual_count=3, use_batchnorm=3)
     # model.load_state_dict(torch.load('models/SpaNet_1/SpaNet_unique_id_5_epoch_1_step_24000.pth'))
     model = ResGaze().to(device)
-    model.load_state_dict(torch.load('weigths/Resnet50_unique_id_1_epoch_11_step_9000.pth'))
+    model.load_state_dict(torch.load('weights/Resnet50_unique_id_1_epoch_11_step_9000.pth'))
     return model
 
 def equalize_hists(face_patch):
@@ -34,7 +34,7 @@ def swap_channels(image):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("-p", "--shape-predictor", default='weigths/shape_predictor_68_face_landmarks.dat', help = "Path to facial landmark predictor")
+    ap.add_argument("-p", "--shape-predictor", default='weights/shape_predictor_68_face_landmarks.dat', help = "Path to facial landmark predictor")
     
     args = vars(ap.parse_args())
 
