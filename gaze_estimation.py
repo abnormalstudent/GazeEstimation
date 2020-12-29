@@ -1,10 +1,10 @@
 from FaceAligner import FaceAligner
 from FaceAligner import rect_to_bb
 
-from src.SpaNet import SpaNet
+from modules.SpaNet import SpaNet
 from modules.ResGaze import ResGaze
 
-from dataset.xgaze_224.view_data import draw_gaze
+from src.view_data import draw_gaze
 
 import torchvision.transforms as transforms
 
