@@ -44,6 +44,13 @@ Actual heatmaps of pupil landmarks :
 
 ![](networks_evaluations/pupil_heatmaps.png)
 
+### ResGaze
+
+| Model                                  | Test Error                    | Train size/Amount of epochs |   Model size   | Evaluation time |
+|:---------------------------------------|:-----------------------------:|:---------------------------:|:---------------|:----------------|
+| ResGaze (resnet50 as a backbone + regressor from extracted features)   |             2 degrees (angular error derived from cosine similarity) on XGaze dataset         |     750k/10               |       100 Mb     | 10ms on RTX 3060Ti per sample   |
+
+
 ## ToDo
 
 • <s> Use pupil features given in the dataset </s> 
