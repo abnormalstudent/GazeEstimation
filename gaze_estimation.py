@@ -64,30 +64,33 @@ def main():
         ret, image = video.read()
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
+        start_time = time.time()
         rects = detector(gray, 0)
-
         for rect in rects:
             (x, y, w, h) = rect_to_bb(rect)
-            #print("Head size : {}x{}\n".format(w, h))
+            print("Detected face x : {}, y : {}, w : {}, h : {}".format(x, y, w, h))
             faceOrig = image[y : y + h, x : x + w]
             faceAligned, affine_center, affine_matrix = fa.align(image, gray, rect, verbose=False)
-
+            print("Affine center : {}".format(affine_center))
             with torch.no_grad():
                 cuda_faceAligned = to_tensor(faceAligned).to(device)
                 cuda_faceAligned = torch.unsqueeze(cuda_faceAligned, 0)
                 gaze = gaze_estimator(cuda_faceAligned).detach().cpu().numpy().copy()[0]
-            
+            ## Idk it just doesn't work.
             inverted_affine_transform = cv2.invertAffineTransform(affine_matrix)
-            face_with_predicted_gaze = draw_gaze(faceAligned, gaze, prediction=True)
+            face_with_predicted_gaze = draw_gaze(faceAligned, gaze, prediction=True, original=False)
+            
+            image = draw_gaze(image, gaze, prediction=True, offset=affine_center, transform=None, image_shape=faceAligned.shape, original=True)
+        fps = 1 / (time.time() - start_time)
+        fps = str(int(fps))
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        cv2.putText(image, "FPS : {}".format(fps), (7, 30), font, 1, (255, 100, 0), 3, cv2.LINE_AA) 
 
-            # image = draw_gaze(image, gaze, prediction=True, offset=affine_center, transform=None, image_shape=faceAligned.shape)
-            cv2.imshow("Input", image)
-            cv2.imshow("Aligned", face_with_predicted_gaze)
-            break
+        cv2.imshow("Input", image)
+        cv2.imshow("Aligned", face_with_predicted_gaze)
         key = cv2.waitKey(1) & 0xFF
         frames += 1
         if key == ord('q'):
             break
-    print("FPS : {}".format(frames / (time.time() - start_time)))
 if __name__ == '__main__':
     main()

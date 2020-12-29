@@ -58,7 +58,7 @@ def show_corners(image, shape, verbose=False):
 
 
 class FaceAligner:
-    def __init__(self, predictor, desiredLeftEye = (0.4, 0.4),
+    def __init__(self, predictor, desiredLeftEye = (0.3, 0.3),
         desiredFaceWidth = 224, desiredFaceHeight = 224):
         self.predictor = predictor
         self.desiredLeftEye = desiredLeftEye
@@ -97,8 +97,8 @@ class FaceAligner:
         
         eyesCenter = ((leftEyeCenter[0] + rightEyeCenter[0]) // 2,
                       (leftEyeCenter[1] + rightEyeCenter[1]) // 2)
-        # image_center = (shape[[37, 40, 32]].mean(), shape[[36, 43, 46]].mean())
-        M = cv2.getRotationMatrix2D(eyesCenter, angle, 1)
+        # eyesCenter = (shape[[37, 40, 32]].mean(), shape[[36, 43, 46]].mean())
+        M = cv2.getRotationMatrix2D(eyesCenter, angle, scale)
         
         tX = self.desiredFaceWidth * 0.5
         tY = self.desiredFaceHeight * self.desiredLeftEye[1]
