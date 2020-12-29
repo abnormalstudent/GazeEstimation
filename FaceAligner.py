@@ -59,7 +59,7 @@ def show_corners(image, shape, verbose=False):
 
 class FaceAligner:
     def __init__(self, predictor, desiredLeftEye = (0.4, 0.4),
-        desiredFaceWidth = 256, desiredFaceHeight = 256):
+        desiredFaceWidth = 224, desiredFaceHeight = 224):
         self.predictor = predictor
         self.desiredLeftEye = desiredLeftEye
         self.desiredFaceWidth = desiredFaceWidth
@@ -68,7 +68,7 @@ class FaceAligner:
         if self.desiredFaceHeight is None:
             self.desiredFaceHeight = self.desiredFaceWidth
             
-    def align(self, image, gray, rect, verbose=False):
+    def align(self, image, gray, rect, bias=20,verbose=False):
         shape = self.predictor(gray, rect)
         shape = face_utils.shape_to_np(shape)
         leftEyePart = shape[36:42]
@@ -97,6 +97,7 @@ class FaceAligner:
         
         eyesCenter = ((leftEyeCenter[0] + rightEyeCenter[0]) // 2,
                       (leftEyeCenter[1] + rightEyeCenter[1]) // 2)
+        # image_center = (shape[[37, 40, 32]].mean(), shape[[36, 43, 46]].mean())
         M = cv2.getRotationMatrix2D(eyesCenter, angle, 1)
         
         tX = self.desiredFaceWidth * 0.5
@@ -105,15 +106,12 @@ class FaceAligner:
         M[1, 2] += (tY - eyesCenter[1])
                       
         (w, h) = (self.desiredFaceWidth, self.desiredFaceHeight)
-        cv2.circle(image, eyesCenter, 3, (255, 255, 0), thickness=1)
+        if verbose:
+            cv2.circle(image, eyesCenter, 3, (255, 255, 0), thickness=1)
         
         output = cv2.warpAffine(image, M, (w, h), flags=cv2.INTER_CUBIC)
         
-        left_eye = plot_eye_boxes(image, leftEyePart, bias=10, verbose=verbose)
-        right_eye = plot_eye_boxes(image, rightEyePart, bias=10, verbose=verbose)
-
-        left_eye = rotate_eye(left_eye, angle)
-        right_eye = rotate_eye(right_eye, angle)
-
-        return output, left_eye, right_eye, eyesCenter, corners
+        left_eye = plot_eye_boxes(image, leftEyePart, bias=bias, verbose=verbose)
+        right_eye = plot_eye_boxes(image, rightEyePart, bias=bias, verbose=verbose)
+        return output, eyesCenter, M
         
