@@ -10,6 +10,8 @@ training environment for [SynthesEyes](https://www.cl.cam.ac.uk/research/rainbow
 
 `Gaze-Estimation-using-XGaze-dataset.ipynb` contains training environment used in order to train and test ResGaze model on XGaze dataset.
 
+`Spatial-Net.ipynb` contains my implementation of DenseNet neural network (paritally) and also SpaNet, which was used to fit XGaze dataset, but no luck - after 50-60 hours of training, it was able to achieve only 10 degrees angular error, and more than that, it was slower than ResGaze.
+
 ## Gaze estimation
 | Model                                  | Test Error                    |   Train size/Amount of epochs |   Model size   |
 |:---------------------------------------|:-----------------------------:|:-----------------------------:|:---------------|
