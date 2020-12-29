@@ -50,12 +50,19 @@ Actual heatmaps of pupil landmarks :
 |:---------------------------------------|:-----------------------------:|:---------------------------:|:---------------|:----------------|
 | ResGaze (resnet50 as a backbone + regressor from extracted features)   |             2 degrees (angular error derived from cosine similarity) on XGaze dataset         |     750k/10               |       100 Mb     | 10ms on RTX 3060Ti per sample   |
 
+This simple model is inspired by [RT-GENE](https://openaccess.thecvf.com/content_ECCV_2018/papers/Tobias_Fischer_RT-GENE_Real-Time_Eye_ECCV_2018_paper.pdf) paper, where they used VGG-16 network for feature extraction, and I decided to use Resnet50 to do the job. 
+
+Next pretty import thing, that [XGaze](https://ait.ethz.ch/projects/2020/ETH-XGaze/) dataset was used to train robust gaze predictor. Is was said, that the model was able to achieve angular error of 2 degrees per sample, which is impressive, because this dataset has very rich distribution in sense of head and gaze rotations. 
+
+Train predictions (green is the prediction and blue is a ground truth gaze vector)             |  Test predictons
+:-------------------------:|:-------------------------:
+![Train predictions](networks_evaluations/ResGaze_train_predictions.jpg)|  ![Test predictons](networks_evaluations/ResGaze_test_predictions.jpg)
 
 ## ToDo
 
 • <s> Use pupil features given in the dataset </s> 
 
-• Implement pupil center detection using another dense layer (probably it is just weighted softmax of all heatmaps?)
+• <s> Implement pupil center detection using another dense layer (probably it is just weighted softmax of all heatmaps?) </s>
 
 • Apply augmentation <s> <b> only if </b> model works bad during inference time </s> 
 
@@ -64,6 +71,6 @@ I think we need stronger feature extraction
 
 • <s> Implement hourglass </s> 
 
-• Explain hourglass error
+• <s> Explain hourglass error </s>
 
-• Implement softmax over heatmaps in order to predict landmarks coordinates
+• <s> Implement softmax over heatmaps in order to predict landmarks coordinates </s>
