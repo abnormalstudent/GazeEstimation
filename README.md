@@ -48,6 +48,14 @@ Actual heatmaps of pupil landmarks :
 
 ![](networks_evaluations/pupil_heatmaps.png)
 
+### Spa-Net
+
+| Model                                  | Test Error                    | Train size/Amount of epochs |   Model size   | Evaluation time |
+|:---------------------------------------|:-----------------------------:|:---------------------------:|:---------------|:----------------|
+| Spa-Net : 3Hourglass w/ BN + small DenseNet as the regressor              |              10 degrees angular error on XGaze dataset            |     750k/2.7               |       2 Mb     | 20ms on RTX 3060Ti   |
+
+It was slow, consumed a lot of memory (7.3Gb VRAM, where batch_size was 8) and had bad predictive abilities, though it gave me an idea to use even stronger feature extractor.
+
 ### ResGaze
 
 | Model                                  | Test Error                    | Train size/Amount of epochs |   Model size   | Evaluation time |
