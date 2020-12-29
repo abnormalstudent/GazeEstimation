@@ -12,7 +12,7 @@ training environment for [SynthesEyes](https://www.cl.cam.ac.uk/research/rainbow
 
 `Spatial-Net.ipynb` contains my implementation of DenseNet neural network (paritally) and also SpaNet, which was used to fit XGaze dataset, but no luck - after 50-60 hours of training, it was able to achieve only 10 degrees angular error, and more than that, it was slower than ResGaze.
 
-## Gaze estimation
+# Regression from eye images
 | Model                                  | Test Error                    |   Train size/Amount of epochs |   Model size   |
 |:---------------------------------------|:-----------------------------:|:-----------------------------:|:---------------|
 | GazeNet (7 conv, 1 dense, w/o BN)      |           0.91                |       10240/70                |    8.7 Mb      |
@@ -29,7 +29,7 @@ UPD : Legend are not right, it must be "Train loss and test loss"
 
 ![](learning_curves/GazeNet_v2.jpg)
 
-## Pupil landmarks estimation
+# Pupil landmarks estimation (hence regression from intermediate features)
 
 | Model                                  | Test Error                    | Train size/Amount of epochs |   Model size   | Evaluation time |
 |:---------------------------------------|:-----------------------------:|:---------------------------:|:---------------|:----------------|
@@ -47,6 +47,8 @@ is enough to predict valuable heatmaps.
 Actual heatmaps of pupil landmarks : 
 
 ![](networks_evaluations/pupil_heatmaps.png)
+
+# Regression directly from face image
 
 ### Spa-Net
 
