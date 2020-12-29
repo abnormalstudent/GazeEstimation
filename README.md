@@ -8,6 +8,8 @@ training environment for [SynthesEyes](https://www.cl.cam.ac.uk/research/rainbow
 
 `Hourglass.ipynb` contains my implementation of Hourglass neural network, it's training and evaluation for pupil heatmaps extraction.
 
+`Gaze-Estimation-using-XGaze-dataset.ipynb` contains training environment used in order to train and test ResGaze model on XGaze dataset.
+
 ## Gaze estimation
 | Model                                  | Test Error                    |   Train size/Amount of epochs |   Model size   |
 |:---------------------------------------|:-----------------------------:|:-----------------------------:|:---------------|
