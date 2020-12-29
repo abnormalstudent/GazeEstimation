@@ -1,7 +1,11 @@
 # GazeEstimation
-This README contains my attempts to solve gaze estimation task.
+## Run demo
 
-dlib + Pytorch pipeline for gaze estimation.
+First run ```pip install -r requirements.txt``` to install all necessary modules to run the demo (you may change it if you don't want to update torch, though, I believe, it will work on earlier versions too).
+
+Enjoy your demo : ``` python gaze_estimation.py```
+
+## Repository structure 
 
 `SynthesEyes.ipynb` contains step-by-step implementation of 
 training environment for [SynthesEyes](https://www.cl.cam.ac.uk/research/rainbow/projects/syntheseyes/) dataset.
@@ -12,7 +16,13 @@ training environment for [SynthesEyes](https://www.cl.cam.ac.uk/research/rainbow
 
 `Spatial-Net.ipynb` contains my implementation of DenseNet neural network (paritally) and also SpaNet, which was used to fit XGaze dataset, but no luck - after 50-60 hours of training, it was able to achieve only 10 degrees angular error, and more than that, it was slower than ResGaze.
 
-# Regression from eye images
+* `modules` - all implemented models
+* `src` - all important helper functions
+* `face_detection` - [BlazeNet](https://arxiv.org/pdf/1907.05047.pdf) implementation (it's not mine, but I forgot to save link to source). Allows to predict face bounding box using <1ms time on GPU. Didn't use it in the project, though.
+
+# Algorithms for gaze estimation
+
+## Regression from eye images
 | Model                                  | Test Error                    |   Train size/Amount of epochs |   Model size   |
 |:---------------------------------------|:-----------------------------:|:-----------------------------:|:---------------|
 | GazeNet (7 conv, 1 dense, w/o BN)      |           0.91                |       10240/70                |    8.7 Mb      |
@@ -29,7 +39,7 @@ UPD : Legend are not right, it must be "Train loss and test loss"
 
 ![](learning_curves/GazeNet_v2.jpg)
 
-# Pupil landmarks estimation (hence regression from intermediate features)
+## Pupil landmarks estimation (hence regression from intermediate features)
 
 | Model                                  | Test Error                    | Train size/Amount of epochs |   Model size   | Evaluation time |
 |:---------------------------------------|:-----------------------------:|:---------------------------:|:---------------|:----------------|
@@ -48,7 +58,7 @@ Actual heatmaps of pupil landmarks :
 
 ![](networks_evaluations/pupil_heatmaps.png)
 
-# Regression directly from face image
+## Regression directly from face image
 
 ### Spa-Net
 
