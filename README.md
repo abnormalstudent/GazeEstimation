@@ -101,6 +101,6 @@ I think we need stronger feature extraction
 
 • <s> Implement softmax over heatmaps in order to predict landmarks coordinates </s>
 
-• Fix inverse affine transform of gaze direction
+• <s> Fix inverse affine transform of gaze direction </s>
 
 • Implement face and facial landmarks detection such that it can be executed on GPU
