@@ -21,10 +21,9 @@ def pitchyaw_to_vector(pitchyaws):
     out[:, 2] = np.multiply(cos[:, 0], cos[:, 1])
     return out
 
-def apply_affine_transform(points, transform):
-    transform = transform.transpose()
-    points = np.hstack([points, 1])
-    return np.dot(points, transform)
+def apply_rotation(points, transform):
+    transform = transform[:, :2]
+    return transform.dot(points.T).T
 
 def draw_gaze(image_in, pitchyaw, thickness=2, prediction=False, offset=(0, 0), transform=None, image_shape=None, original=False):
     """Draw gaze angle on given image with a given eye positions."""
@@ -46,12 +45,9 @@ def draw_gaze(image_in, pitchyaw, thickness=2, prediction=False, offset=(0, 0), 
         pos = (int(offset[0]), int(offset[1]))
     else:
         pos = (int(h / 2.0 + offset[0]), int(w / 2.0 + offset[1]))
+        
     if transform is not None:
-        # if transform.shape == (2, 3):
-        #     transform = np.vstack((transform, [0, 0, 1]))
-        # print(transform.shape)
-        # pos = apply_affine_transform(pos, transform)
-        (dx, dy) = apply_affine_transform(np.array([dx, dy]), transform)
+        (dx, dy) = apply_rotation(np.array([dx, dy]), transform)
 
     if len(image_out.shape) == 2 or image_out.shape[2] == 1:
         image_out = cv2.cvtColor(image_out, cv2.COLOR_GRAY2BGR)
