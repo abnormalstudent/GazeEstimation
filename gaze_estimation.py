@@ -21,7 +21,7 @@ def load_model(device):
     # model = SpaNet(in_features=64, middle_features=32, residual_count=3, use_batchnorm=3)
     # model.load_state_dict(torch.load('models/SpaNet_1/SpaNet_unique_id_5_epoch_1_step_24000.pth'))
     model = ResGaze().to(device)
-    model.load_state_dict(torch.load('weights/Resnet50_unique_id_1_epoch_11_step_9000.pth'))
+    model.load_state_dict(torch.load('weights/Resnet50_unique_id_1_epoch_11_step_9000.pth', map_location=device))
     return model
 
 def equalize_hists(face_patch):
@@ -76,11 +76,11 @@ def main():
                 cuda_faceAligned = to_tensor(faceAligned).to(device)
                 cuda_faceAligned = torch.unsqueeze(cuda_faceAligned, 0)
                 gaze = gaze_estimator(cuda_faceAligned).detach().cpu().numpy().copy()[0]
-            ## Idk it just doesn't work.
+                
             inverted_affine_transform = cv2.invertAffineTransform(affine_matrix)
             face_with_predicted_gaze = draw_gaze(faceAligned, gaze, prediction=True, original=False)
             
-            image = draw_gaze(image, gaze, prediction=True, offset=affine_center, transform=None, image_shape=faceAligned.shape, original=True)
+            image = draw_gaze(image, gaze, prediction=True, offset=affine_center, transform=inverted_affine_transform, image_shape=faceAligned.shape, original=True)
         fps = 1 / (time.time() - start_time)
         fps = str(int(fps))
         font = cv2.FONT_HERSHEY_SIMPLEX
