@@ -100,3 +100,7 @@ I think we need stronger feature extraction
 • <s> Explain hourglass error </s>
 
 • <s> Implement softmax over heatmaps in order to predict landmarks coordinates </s>
+
+• Fix inverse affine transform of gaze direction
+
+• Implement face and facial landmarks detection such that it can be executed on GPU
