@@ -11,7 +11,7 @@ import numpy as np
 
 def BlazeFace_loader(use_gpu=False, device=None):
     if device is None:
-        device = "cuda:0" if torch.cuda.is_available() else "cpu"
+        device = "cuda:0" if torch.cuda.is_available() and use_gpu else "cpu"
     model = BlazeFace().to(device)
     model.load_weights("weights/blazeface.pth")
     model.load_anchors("weights/anchors.npy")
