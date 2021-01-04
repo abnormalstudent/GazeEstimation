@@ -16,6 +16,8 @@ import dlib
 import cv2
 import time
 
+from copy import copy
+
 
 def load_model(device):
     # model = SpaNet(in_features=64, middle_features=32, residual_count=3, use_batchnorm=3)
@@ -31,6 +33,11 @@ def equalize_hists(face_patch):
     
 def swap_channels(image):
     return cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+def smooth_gaze(gaze, previous_gaze, gaze_smoothing=0.4):
+    if previous_gaze is not None:
+        return gaze_smoothing * previous_gaze + gaze * (1 - gaze_smoothing)
+    return gaze 
 
 def main():
     ap = argparse.ArgumentParser()
@@ -59,7 +66,8 @@ def main():
 
     start_time = time.time()
     frames = 0
-
+    previous_gaze = None
+    face_with_predicted_gaze = None
     while(True):
         ret, image = video.read()
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -75,7 +83,8 @@ def main():
             with torch.no_grad():
                 cuda_faceAligned = to_tensor(faceAligned).to(device)
                 cuda_faceAligned = torch.unsqueeze(cuda_faceAligned, 0)
-                gaze = gaze_estimator(cuda_faceAligned).detach().cpu().numpy().copy()[0]
+                gaze = smooth_gaze(gaze_estimator(cuda_faceAligned).detach().cpu().numpy().copy()[0], previous_gaze, gaze_smoothing=0.4)
+                previous_gaze = copy(gaze)
                 
             inverted_affine_transform = cv2.invertAffineTransform(affine_matrix)
             face_with_predicted_gaze = draw_gaze(faceAligned, gaze, prediction=True, original=False)
