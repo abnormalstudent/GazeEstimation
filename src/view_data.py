@@ -27,6 +27,8 @@ def apply_rotation(points, transform):
 
 def draw_gaze(image_in, pitchyaw, thickness=2, prediction=False, offset=(0, 0), transform=None, image_shape=None, original=False):
     """Draw gaze angle on given image with a given eye positions."""
+    print("Vector in 3D space : {}".format(pitchyaw_to_vector(np.expand_dims(pitchyaw, axis=0))))
+
     if prediction:
         color = (0, 255, 0)
     else:
