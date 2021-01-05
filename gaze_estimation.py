@@ -42,7 +42,6 @@ def smooth_gaze(gaze, previous_gaze, gaze_smoothing=0.4):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("-p", "--shape-predictor", default='weights/shape_predictor_68_face_landmarks.dat', help = "Path to facial landmark predictor")
-    
     args = vars(ap.parse_args())
 
     detector = dlib.get_frontal_face_detector()
@@ -74,16 +73,17 @@ def main():
 
         start_time = time.time()
         rects = detector(gray, 0)
+        cuda_faceAligned = None
         for rect in rects:
             (x, y, w, h) = rect_to_bb(rect)
-            print("Detected face x : {}, y : {}, w : {}, h : {}".format(x, y, w, h))
             faceOrig = image[y : y + h, x : x + w]
             faceAligned, affine_center, affine_matrix = fa.align(image, gray, rect, verbose=False)
-            print("Affine center : {}".format(affine_center))
             with torch.no_grad():
                 cuda_faceAligned = to_tensor(faceAligned).to(device)
                 cuda_faceAligned = torch.unsqueeze(cuda_faceAligned, 0)
-                gaze = smooth_gaze(gaze_estimator(cuda_faceAligned).detach().cpu().numpy().copy()[0], previous_gaze, gaze_smoothing=0.4)
+                cuda_gaze = gaze_estimator(cuda_faceAligned)
+                
+                gaze = smooth_gaze(cuda_gaze.detach().cpu().numpy().copy()[0], previous_gaze, gaze_smoothing=0.4)
                 previous_gaze = copy(gaze)
                 
             inverted_affine_transform = cv2.invertAffineTransform(affine_matrix)
@@ -94,7 +94,7 @@ def main():
         fps = str(int(fps))
         font = cv2.FONT_HERSHEY_SIMPLEX
         cv2.putText(image, "FPS : {}".format(fps), (7, 30), font, 1, (255, 100, 0), 3, cv2.LINE_AA) 
-
+        
         cv2.imshow("Input", image)
         cv2.imshow("Aligned", face_with_predicted_gaze)
         key = cv2.waitKey(1) & 0xFF
