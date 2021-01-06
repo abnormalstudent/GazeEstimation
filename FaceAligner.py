@@ -82,6 +82,8 @@ class FaceAligner:
         leftEyeCenter = leftEyePart.mean(axis = 0).astype(int)
         rightEyeCenter = rightEyePart.mean(axis = 0).astype(int)
         
+        if verbose:
+            cv2.line(image, tuple(leftEyeCenter), tuple(rightEyeCenter), (0, 255, 255), thickness=1)
         # cv2.imshow("EyesLandmarks", image)
         
         dY = rightEyeCenter[1] - leftEyeCenter[1]
@@ -111,7 +113,7 @@ class FaceAligner:
         
         output = cv2.warpAffine(image, M, (w, h), flags=cv2.INTER_CUBIC)
         
-        left_eye = plot_eye_boxes(image, leftEyePart, bias=bias, verbose=verbose)
-        right_eye = plot_eye_boxes(image, rightEyePart, bias=bias, verbose=verbose)
+        # left_eye = plot_eye_boxes(image, leftEyePart, bias=bias, verbose=verbose)
+        # right_eye = plot_eye_boxes(image, rightEyePart, bias=bias, verbose=verbose)
         return output, eyesCenter, M
         

@@ -67,6 +67,11 @@ def main():
     frames = 0
     previous_gaze = None
     face_with_predicted_gaze = None
+
+    draw_normalized_gaze = True
+    draw_input_gaze = True
+    verbose = False
+    show_fps = True
     while(True):
         ret, image = video.read()
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -77,7 +82,7 @@ def main():
         for rect in rects:
             (x, y, w, h) = rect_to_bb(rect)
             faceOrig = image[y : y + h, x : x + w]
-            faceAligned, affine_center, affine_matrix = fa.align(image, gray, rect, verbose=False)
+            faceAligned, affine_center, affine_matrix = fa.align(image, gray, rect, verbose=verbose)
             with torch.no_grad():
                 cuda_faceAligned = to_tensor(faceAligned).to(device)
                 cuda_faceAligned = torch.unsqueeze(cuda_faceAligned, 0)
@@ -87,19 +92,29 @@ def main():
                 previous_gaze = copy(gaze)
                 
             inverted_affine_transform = cv2.invertAffineTransform(affine_matrix)
-            face_with_predicted_gaze = draw_gaze(faceAligned, gaze, prediction=True, original=False)
-            
-            image = draw_gaze(image, gaze, prediction=True, offset=affine_center, transform=inverted_affine_transform, image_shape=faceAligned.shape, original=True)
-        fps = 1 / (time.time() - start_time)
-        fps = str(int(fps))
-        font = cv2.FONT_HERSHEY_SIMPLEX
-        cv2.putText(image, "FPS : {}".format(fps), (7, 30), font, 1, (255, 100, 0), 3, cv2.LINE_AA) 
+            if draw_normalized_gaze:
+                faceAligned = draw_gaze(faceAligned, gaze, prediction=True, original=False)
+            if draw_input_gaze: 
+                image = draw_gaze(image, gaze, prediction=True, offset=affine_center, transform=inverted_affine_transform, image_shape=faceAligned.shape, original=True)
+        if show_fps:
+            fps = 1 / (time.time() - start_time)
+            fps = str(int(fps))
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            cv2.putText(image, "FPS : {}".format(fps), (7, 30), font, 1, (255, 100, 0), 3, cv2.LINE_AA) 
         
         cv2.imshow("Input", image)
-        cv2.imshow("Aligned", face_with_predicted_gaze)
+        cv2.imshow("Aligned", faceAligned)
         key = cv2.waitKey(1) & 0xFF
         frames += 1
         if key == ord('q'):
             break
+        elif key == ord('n'):
+            draw_normalized_gaze ^= True
+        elif key == ord('i'):
+            draw_input_gaze ^= True
+        elif key == ord('v'):
+            verbose ^= True 
+        elif key == ord('f'):
+            show_fps ^= True       
 if __name__ == '__main__':
     main()
