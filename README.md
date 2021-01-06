@@ -5,6 +5,12 @@ First run ```pip install -r requirements.txt``` to install all necessary modules
 
 Also, don't forget to download all the weigths and place them into `weights` folder.
 
+Hotkeys : 
+* ```i``` to disable/enable gaze drawing on <b>i</b>nput image.
+* ```n``` to disable/enable gaze drawing on <b>n</b>ormalized image.
+* ```v``` to disable/enable <b>v</b>erbose mode.
+* ```f``` to disable/enable <b>F</b>PS.
+
 To run demo : ``` python gaze_estimation.py``` 
 ## Pipeline
 
