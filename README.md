@@ -6,6 +6,9 @@ First run ```pip install -r requirements.txt``` to install all necessary modules
 Also, don't forget to download all the weigths and place them into `weights` folder.
 
 To run demo : ``` python gaze_estimation.py``` 
+## Pipeline
+
+![](networks_evaluations/pipeline.png)
 
 ## Repository structure 
 
