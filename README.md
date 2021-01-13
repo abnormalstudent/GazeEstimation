@@ -3,7 +3,7 @@
 
 First run ```pip install -r requirements.txt``` to install all necessary modules to run the demo (you may change it if you don't want to update torch, though, I believe, it will work on earlier versions too).
 
-Also, don't forget to download all the weigths and place them into `weights` folder.
+Also, don't forget to download model weights and place them into `weights` folder.
 
 Hotkeys : 
 * ```i``` to disable/enable gaze drawing on <b>i</b>nput image.
