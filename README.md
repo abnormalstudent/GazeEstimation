@@ -54,7 +54,7 @@ UPD : Legend is not right, it must be "Train loss and test loss"
 
 | Model                                  | Test Error                    | Train size/Amount of epochs |   Model size   | Evaluation time |
 |:---------------------------------------|:-----------------------------:|:---------------------------:|:---------------|:----------------|
-| PupilNet-3Hourglass w/ BN              |              ~3000            |     10240/153               |       2 Mb     | 52 ms on pretty old InterCore-i5 CPU   |
+| PupilNet-3Hourglass w/ BN              |              ~3000            |     10240/153               |       2 Mb     | 52 ms on pretty old Intel Core i5-2310 CPU   |
 
 ### PupilNet-3Hourglass-sigma_10 w/ BN
 
