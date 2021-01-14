@@ -89,7 +89,9 @@ Actual heatmaps of pupil landmarks :
 |:---------------------------------------|:-----------------------------:|:---------------------------:|:---------------|:----------------|
 | Spa-Net : 3Hourglass w/ BN + small DenseNet as the regressor              |              10 degrees angular error on XGaze dataset            |     750k/2.7               |       2 Mb     | 20ms on RTX 3060Ti   |
 
-This approach was slow, consumed a lot of memory (7.3Gb VRAM, where batch_size was 8) and had bad predictive abilities, though it gave me an idea to use even stronger feature extractor
+Although, Hourglass network was good on pupil landmarks heatmaps estimation, it lacks the abilities of feature extraction, because even though the size of the model is pretty small, training of this model is hard, because it uses a lot of memory during training (7.3Gb VRAM when batch_size == 8). 
+
+I think with longer training this model can achieve far more better results, but the next model is way easier to train and also it shown SOTA perfomance on classification tasks (so, for sure, worked pretty well on feature extraction task). 
 
 ### ResGaze
 
