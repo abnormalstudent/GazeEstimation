@@ -66,7 +66,7 @@ is enough to predict valuable heatmaps.
 The loss used here is the same used in [Learning to Find Eye Region Landmarks for Remote Gaze
 Estimation in Unconstrained Settings](https://perceptualui.org/publications/park18_etra.pdf), which is 
 
-![](https://latex.codecogs.com/svg.latex?\sum_{i&space;=&space;0}^{8}\sum_{p}&space;||&space;h_{i}(p)&space;-&space;\widetilde{h_{i}(p)}||_{2}^{2})
+![](https://latex.codecogs.com/svg.latex?\sum_{i&space;=&space;1}^{8}\sum_{p}&space;||&space;h_{i}(p)&space;-&space;\widetilde{h_{i}(p)}||_{2}^{2})
 
 Where this suspicious 8 is the number of pupil landmarks, you can check how heatmaps are generated in ``` Hourglass.ipynb```, and "p" is every pixel in the heatmap.
 
