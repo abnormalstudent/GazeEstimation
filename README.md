@@ -99,7 +99,7 @@ This approach was slow, consumed a lot of memory (7.3Gb VRAM, where batch_size w
 
 This model is inspired by [RT-GENE](https://openaccess.thecvf.com/content_ECCV_2018/papers/Tobias_Fischer_RT-GENE_Real-Time_Eye_ECCV_2018_paper.pdf) paper, where they used VGG-16 network for feature extraction, and I decided to use Resnet50 to do the job. 
 
-Next very import thing is that [XGaze](https://ait.ethz.ch/projects/2020/ETH-XGaze/) dataset was used to train robust gaze predictor. Is was said, that the model was able to achieve angular error of 2 degrees per sample, which is impressive, because this dataset has very rich distribution in sense of head and gaze rotations. This variance in appearence allows us to forget about head position estimation, because neural net learned these features by itself.
+Next very import thing is that [XGaze](https://ait.ethz.ch/projects/2020/ETH-XGaze/) dataset was used to train robust gaze predictor. Is was said, that the model was able to achieve angular error of 2 degrees per sample, which is impressive, because this dataset has very rich distribution in sense of head and gaze rotations. This variance in appearence allows us to forget about head position estimation, because neural net will learn them by itself.
 
 This is how the model performed on [XGaze](https://ait.ethz.ch/projects/2020/ETH-XGaze/) dataset.
 
