@@ -97,7 +97,7 @@ I think with longer training this model can achieve far more better results, but
 
 | Model                                  | Test Error                    | Train size/Amount of epochs |   Model size   | Evaluation time |
 |:---------------------------------------|:-----------------------------:|:---------------------------:|:---------------|:----------------|
-| ResGaze (resnet50 as a backbone + regressor from extracted features)   |             2 degrees (angular error derived from cosine similarity) on XGaze dataset         |     750k/10               |       100 Mb     | 10ms on RTX 3060Ti per sample   |
+| ResGaze (resnet50 as a backbone + simple Linear layer)   |             2 degrees (angular error derived from cosine similarity) on XGaze dataset         |     750k/10               |       100 Mb     | 10ms on RTX 3060Ti per sample   |
 
 This model is inspired by [RT-GENE](https://openaccess.thecvf.com/content_ECCV_2018/papers/Tobias_Fischer_RT-GENE_Real-Time_Eye_ECCV_2018_paper.pdf) paper, where they used VGG-16 network for feature extraction, and I decided to use Resnet50 to do the job. 
 
