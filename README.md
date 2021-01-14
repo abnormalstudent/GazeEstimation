@@ -40,11 +40,11 @@ training environment for [SynthesEyes](https://www.cl.cam.ac.uk/research/rainbow
 | GazeNet_v2 (7 conv, 2 dense, w/ BN)    |           0.79                |       10240/70                |   15.6 Mb      |
 
 ### GazeNet (7 conv, 1 dense, w/o BN) 
-Test error is quite big because it represents L1 loss with respect to euler's angles in screen space 
-(yaw and pitch, reference point located at pupil center) 
+Test error is quite big because it represents L1 loss in terms of euler's angles in 3D-space 
+(we predict two angles in spherical coordinates in order to get unit-vector on a 3D-sphere as the direction of gaze) 
 
 ### GazeNet_v2 (8 conv, 2 dense, w/ BN)
-Clear underfit, my guess is that it is pretty hard to learn direct mapping from feature space of the image (HxWx3) directly to gaze (just 2 features, it is either point on the screen or two angles in radians). Maybe, we should try to learn intermediate features first.
+Learning curves show us, that model is underfitting, my guess is that it is hard to learn direct mapping from feature space of the image (HxWx3) to gaze (just two features). Maybe, we should try to learn intermediate features first.
 
 UPD : Legend is not right, it must be "Train loss and test loss" 
 
@@ -63,6 +63,18 @@ measured it over batch, not over single image. It means that following model giv
 (because one prediction contains 8 heatmaps each of them has 80x120 pixels), which 
 is enough to predict valuable heatmaps.
 
+The loss used here is the same used in [Learning to Find Eye Region Landmarks for Remote Gaze
+Estimation in Unconstrained Settings](https://perceptualui.org/publications/park18_etra.pdf), which is 
+
+![](https://latex.codecogs.com/svg.latex?\sum_{i&space;=&space;0}^{8}\sum_{p}&space;||&space;h_{i}(p)&space;-&space;\widetilde{h_{i}(p)}||_{2}^{2})
+
+Where this suspicious 8 is the number of pupil landmarks, you can check how heatmaps are generated in ``` Hourglass.ipynb```, and "p" is every pixel in the heatmap.
+
+On how the ground-truth heatmaps were generated : suppose that we have a single landmark located on (x, y) point. All we do is we take an empty image (filled with zeroes) and then place a Gaussian distribution at (x, y) with some variance. Examples of generated heatmaps are also shown in ```Hourglass.ipynb```.
+
+The heatmaps encode
+the per-pixel confidence on a specific landmark’s location.
+
 ![](learning_curves/PupilEyeNet_3Hourglass.jpg)
 
 Actual heatmaps of pupil landmarks : 
@@ -77,7 +89,7 @@ Actual heatmaps of pupil landmarks :
 |:---------------------------------------|:-----------------------------:|:---------------------------:|:---------------|:----------------|
 | Spa-Net : 3Hourglass w/ BN + small DenseNet as the regressor              |              10 degrees angular error on XGaze dataset            |     750k/2.7               |       2 Mb     | 20ms on RTX 3060Ti   |
 
-It was slow, consumed a lot of memory (7.3Gb VRAM, where batch_size was 8) and had bad predictive abilities, though it gave me an idea to use even stronger feature extractor.
+This approach was slow, consumed a lot of memory (7.3Gb VRAM, where batch_size was 8) and had bad predictive abilities, though it gave me an idea to use even stronger feature extractor
 
 ### ResGaze
 
@@ -85,31 +97,18 @@ It was slow, consumed a lot of memory (7.3Gb VRAM, where batch_size was 8) and h
 |:---------------------------------------|:-----------------------------:|:---------------------------:|:---------------|:----------------|
 | ResGaze (resnet50 as a backbone + regressor from extracted features)   |             2 degrees (angular error derived from cosine similarity) on XGaze dataset         |     750k/10               |       100 Mb     | 10ms on RTX 3060Ti per sample   |
 
-This simple model is inspired by [RT-GENE](https://openaccess.thecvf.com/content_ECCV_2018/papers/Tobias_Fischer_RT-GENE_Real-Time_Eye_ECCV_2018_paper.pdf) paper, where they used VGG-16 network for feature extraction, and I decided to use Resnet50 to do the job. 
+This model is inspired by [RT-GENE](https://openaccess.thecvf.com/content_ECCV_2018/papers/Tobias_Fischer_RT-GENE_Real-Time_Eye_ECCV_2018_paper.pdf) paper, where they used VGG-16 network for feature extraction, and I decided to use Resnet50 to do the job. 
 
-Next pretty import thing, that [XGaze](https://ait.ethz.ch/projects/2020/ETH-XGaze/) dataset was used to train robust gaze predictor. Is was said, that the model was able to achieve angular error of 2 degrees per sample, which is impressive, because this dataset has very rich distribution in sense of head and gaze rotations. 
+Next very import thing is that [XGaze](https://ait.ethz.ch/projects/2020/ETH-XGaze/) dataset was used to train robust gaze predictor. Is was said, that the model was able to achieve angular error of 2 degrees per sample, which is impressive, because this dataset has very rich distribution in sense of head and gaze rotations. This variance in appearence allows us to forget about head position estimation, because neural net learned these features by itself.
+
+This is how the model performed on [XGaze](https://ait.ethz.ch/projects/2020/ETH-XGaze/) dataset.
 
 Train predictions (green is the prediction and blue is a ground truth gaze vector)             |  Test predictons
 :-------------------------:|:-------------------------:
 ![Train predictions](networks_evaluations/ResGaze_train_predictions.jpg)|  ![Test predictons](networks_evaluations/ResGaze_test_predictions.jpg)
 
-## ToDo
+## Further improvements
 
-• <s> Use pupil features given in the dataset </s> 
-
-• <s> Implement pupil center detection using another dense layer (probably it is just weighted softmax of all heatmaps?) </s>
-
-• Apply augmentation <s> <b> only if </b> model works bad during inference time </s> 
-
-Just took a look at learning curves, model is too weak, so
-I think we need stronger feature extraction
-
-• <s> Implement hourglass </s> 
-
-• <s> Explain hourglass error </s>
-
-• <s> Implement softmax over heatmaps in order to predict landmarks coordinates </s>
-
-• <s> Fix inverse affine transform of gaze direction </s>
-
-• Implement face and facial landmarks detection such that it can be executed on GPU
+* Implement face and facial landmarks detection such that it can be executed on GPU (faster inference)
+* Pruning
+* Try model compression (for faster inference, less VRAM consumed during evaluation)
