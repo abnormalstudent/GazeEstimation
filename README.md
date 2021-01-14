@@ -70,7 +70,7 @@ Estimation in Unconstrained Settings](https://perceptualui.org/publications/park
 
 Where this suspicious 8 is the number of pupil landmarks, you can check how heatmaps are generated in ``` Hourglass.ipynb```, and "p" is every pixel in the heatmap.
 
-On how the ground-truth heatmaps were generated : suppose that we have a single landmark located on (x, y) point. All we do is we take an empty image (filled with zeroes) and then place a Gaussian distribution at (x, y) with some variance. Examples of generated heatmaps are also shown in ```Hourglass.ipynb```.
+On how the ground-truth heatmaps were generated : suppose that we have a single landmark located on (x, y) point. All we do is we take an empty image (filled with zeroes) and then place a Gaussian distribution at (x, y) with mean == 1 and some variance == sigma. Examples of generated heatmaps are also shown in ```Hourglass.ipynb```.
 
 The heatmaps encode
 the per-pixel confidence on a specific landmark’s location.
