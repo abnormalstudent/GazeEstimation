@@ -1,5 +1,5 @@
 # GazeEstimation
-This repository contains my efforts to solve Gaze Estimation task in order to join Computer Vision Lab at MSU
+This repository contains my efforts to solve Gaze Estimation task in order to join Computer Vision Lab at CMC MSU
 Here you can find : 
 * Working demo
 * Some thoughts on the approach
