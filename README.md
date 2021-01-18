@@ -1,4 +1,9 @@
 # GazeEstimation
+This repository contains my efforts to solve Gaze Estimation task in order to join Computer Vision Lab at MSU
+Here you can find : 
+* Working demo
+* Some thoughts on the approach
+* Possible further improvements of the used algorithm 
 ## Demo
 
 First run ```pip install -r requirements.txt``` to install all necessary modules to run the demo (you may change it if you don't want to update torch, though, I believe, it will work on earlier versions too).
